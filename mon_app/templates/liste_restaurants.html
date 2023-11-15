@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Liste des Restaurants</title>
+</head>
+<body>
+
+<h1>Liste des Restaurants</h1>
+
+<ul>
+    {% for restaurant in restaurants %}
+        <li>{{ restaurant.nom }} - {{ restaurant.adresse }} - {{ restaurant.code_postal }}</li>
+    {% endfor %}
+</ul>
+
+</body>
+</html>

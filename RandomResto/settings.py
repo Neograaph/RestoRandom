@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'mon_app',
     'rest_framework_swagger',
+    'folium',
 ]
 
 MIDDLEWARE = [
