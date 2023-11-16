@@ -10,9 +10,13 @@
 </head>
 <body>
 <div id="main-container">
-
+<!-- Ajoutez ce bouton dans votre template HTML -->
+    <form method="post" action="{% url 'ma_vue_random' %}">
+        {% csrf_token %}
+        <button class="btn2" type="submit">Choisir un restaurant au hasard</button>
+    </form>
     <a href="{% url 'liste_restaurants' %}">
-        <button>Aller vers la liste des restaurants</button>
+        <button class="btn1">Aller vers la liste des restaurants</button>
     </a>
     <!-- <h1>Bienvenue sur ma page !</h1>
     <p>Ceci est le contenu de ma vue.</p> -->

@@ -1,5 +1,5 @@
 /* Ajoutez ces styles pour personnaliser le bouton */
-button {
+.btn1 {
   position: fixed;
     bottom: 20px; /* Ajustez la position verticale en fonction de vos besoins */
     right: 20px; /* Ajustez la position horizontale en fonction de vos besoins */
@@ -16,6 +16,27 @@ button {
 }
 
 /* Changez la couleur du bouton au survol */
-button:hover {
+.btn1:hover {
+  background-color: #45a049;
+}
+
+.btn2 {
+  position: fixed;
+    bottom: 70px; /* Ajustez la position verticale en fonction de vos besoins */
+    right: 20px; /* Ajustez la position horizontale en fonction de vos besoins */
+    padding: 10px 20px;
+    background-color: #ba1d1d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    z-index: 999; /* Assure que le bouton est au-dessus de tout le reste */
+}
+
+/* Changez la couleur du bouton au survol */
+.btn2:hover {
   background-color: #45a049;
 }
