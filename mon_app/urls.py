@@ -5,8 +5,8 @@ from .views import liste_restaurants
 from .views import sauvegarder_restaurants, ajouter_donnees
 
 urlpatterns = [
+    path('', liste_restaurants, name='liste_restaurants'),
     path('map/', ma_vue, name='ma_vue'),
-    path('restaurants/', liste_restaurants, name='liste_restaurants'),
     path('sauvegarder_restaurants/', sauvegarder_restaurants, name='sauvegarder_restaurants'),
     path('ajouter_donnees/', ajouter_donnees, name='ajouter_donnees'),
 ]
