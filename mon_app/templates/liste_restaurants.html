@@ -1,17 +1,117 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des Restaurants</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/liste_restaurants.css' %}">
 </head>
 <body>
 
-<h1>Liste des Restaurants</h1>
+<div id="main-container">
+    <a href="{% url 'ma_vue' %}">
+        <button>Aller vers la carte</button>
+    </a>
+    <h1>Liste des Restaurants</h1>
 
-<ul>
-    {% for restaurant in restaurants %}
-        <li>{{ restaurant.nom }} - {{ restaurant.adresse }} - {{ restaurant.code_postal }}</li>
-    {% endfor %}
-</ul>
+    <ul>
+        {% for restaurant in restaurants %}
+            <li>
+                <strong>{{ restaurant.nom }}</strong> - {{ restaurant.ville }} - {{ restaurant.code_postal }}
+                <br/> Coordonnées : {{ restaurant.latitude }} - {{ restaurant.longitude }}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<!-- Ajoutez ici vos scripts JavaScript si nécessaire -->
 
 </body>
 </html>
+
+<script>
+    // Fonction pour récupérer le jeton CSRF à partir des cookies
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === name + '=') {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+// Récupérer le jeton CSRF
+const csrftoken = getCookie('csrftoken');
+
+// Vérifier si csrftoken est défini
+if (csrftoken) {
+  // Effectuer votre appel fetch ici avec csrftoken
+  fetch('/ajouter_donnees', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': csrftoken
+    },
+    body: JSON.stringify({ latitude: latitude, longitude: longitude })
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      console.log('ici');
+    });
+} else {
+  console.error('Le jeton CSRF n\'est pas défini.');
+}
+
+// Déclarer les variables en dehors du bloc if
+var latitude;
+var longitude;
+
+if ("geolocation" in navigator) {
+  navigator.geolocation.getCurrentPosition(function(position) {
+    // Utiliser les variables déjà déclarées
+    latitude = position.coords.latitude;
+    longitude = position.coords.longitude;
+    console.log("coordonnées : ", latitude, longitude);
+
+    // Envoyer la position au serveur Django
+    fetch('/ajouter_donnees', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken // Assurez-vous d'inclure le token CSRF
+      },
+      body: JSON.stringify({ latitude: latitude, longitude: longitude })
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        console.log('ici');
+      });
+  }, function(error) {
+    console.warn(`ERROR(${error.code}): ${error.message}`);
+  }, {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0
+  });
+  console.log('geolocalisation ok');
+} else {
+  console.log("La géolocalisation n'est pas prise en charge par ce navigateur.");
+}
+
+
+</script>

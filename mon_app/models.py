@@ -11,3 +11,7 @@ class Restaurant(models.Model):
 
     def __str__(self):
         return self.nom
+
+class CurrentLocation(models.Model):
+    latitude = models.FloatField()
+    longitude = models.FloatField()
